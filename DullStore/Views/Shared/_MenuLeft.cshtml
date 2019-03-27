@@ -1,0 +1,63 @@
+﻿@using DullStore.DAO
+@using DullStore.Entities
+@using DullStore.Bean
+@{
+    DanhMucDAO dm = new DanhMucDAO();
+    IQueryable<DanhMuc> itemdm = dm.ListDanhMuc();
+    SanPhamDAO sp = new SanPhamDAO();
+    IQueryable<SanPham> listsp = sp.ListSP();
+    StyleDAO style = new StyleDAO();
+    IQueryable<Style> listst = style.ListDanhMuc();
+
+    ShoppingCart cart = (ShoppingCart)Session["cart"];
+    if (cart == null)
+    {
+        cart = new ShoppingCart();
+    }
+    //cart.AddItem(0, "", 0, 0, "");
+    Session["cart"] = cart;
+}
+<div id="sidebar" class="span3">
+    <div class="well well-small">
+        <ul class="nav nav-list">
+            <b>Hãng sản xuất</b>
+
+            @foreach (var item in itemdm)
+            {
+                <li><a href="/Home/SPTheoMuc?madm=@item.ma"><span class="icon-chevron-right"></span>@item.tendanhmuc</a></li>
+            }
+            <li style="border:0"> &nbsp;</li>
+        </ul>
+    </div>
+    <br>
+    <div class="well well-small">
+        <ul class="nav nav-list">
+            <b>Thể loại</b>
+
+            @foreach (var item in listst)
+            {
+                <li><a href="/Home/SPStyle?mast=@item.ma"><span class="icon-chevron-right"></span>@item.ten</a></li>
+            }
+            <li style="border:0"> &nbsp;</li>
+        </ul>
+    </div>
+    <br>
+    <ul class="nav nav-list promowrapper">
+        @foreach (var item in listsp)
+        {
+            if (item.ma == 6 || item.ma == 10 || item.ma == 4)
+            {
+                <li>
+                    <div class="thumbnail">
+                        <a class="zoomTool" href="/Home/ChitietSP?id=@item.ma" title="add to cart"><span class="icon-search"></span> Chi tiết</a>
+                        <img src="~/Content/Image/@item.linkanh" alt="bootstrap ecommerce templates">
+                        <div class="caption">
+                            <h4><a class="defaultBtn" href="/Home/ChitietSP?id=@item.ma">Xem</a> <span class="pull-right">@item.giaban</span></h4>
+                        </div>
+                    </div>
+                </li>
+                <li style="border:0"> &nbsp;</li>
+            }
+        }
+    </ul>
+</div>

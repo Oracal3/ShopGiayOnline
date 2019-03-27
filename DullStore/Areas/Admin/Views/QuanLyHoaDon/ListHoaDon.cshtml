@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DullStore.Entities.GioHang>
+
+@{
+    ViewBag.Title = "ListHoaDon";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Danh sách hóa đơn</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ma)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.makhachhang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ngaydathang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ngaygiaohang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tinhtranggiaohang)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.makhachhang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ngaydathang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ngaygiaohang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tinhtranggiaohang)
+            </td>
+            <td>
+                @{
+                    if (item.tinhtranggiaohang == "Đang giao hàng")
+                    {
+                        @Html.ActionLink("Cập nhật tình trạng giao hàng", "Edit", new { id = item.ma })
+                    }
+                    else if (item.tinhtranggiaohang == "Đã giao hàng và khách hàng đã thanh toán đầy đủ ")
+                    {
+                        @Html.ActionLink("Cập nhật tình trạng giao hàng", "Edit", new { id = item.ma, @hidden = "hidden" })
+                    }
+                }
+
+                |@Html.ActionLink("Chi tiết hóa đơn", "Details", new { id = item.ma })
+
+            </td>
+        </tr>
+                    }
+
+</table>

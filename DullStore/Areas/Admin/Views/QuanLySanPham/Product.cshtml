@@ -1,0 +1,71 @@
+﻿@model PagedList.PagedList<DullStore.Entities.SanPham>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Add", null, new {@class="btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().giaban)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().linkanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().xuatxu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().madanhmuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().mastyle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.giaban)
+        </td>
+        <td>
+            <div><img src="@Url.Content("~/Content/Image/"+item.linkanh)" height="99" width="150"/></div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.xuatxu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DanhMuc.tendanhmuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Style.ten)
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ma }, new {@class="btn btn-info" }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id = item.ma }, new { @class = "btn btn-warning" }) |
+            <button class="btn btn-danger" ><a href="/QuanLySanPham/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a></button>
+        </td>
+    </tr>
+}
+
+</table>
+@*tạo link liên kết số trang*@
+
+<div class="pagination">
+    @Html.PagedListPager(Model, trang => Url.Action("Product", new { trang = trang }))
+</div>

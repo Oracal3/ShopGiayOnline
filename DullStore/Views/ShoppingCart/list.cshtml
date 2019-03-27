@@ -1,0 +1,101 @@
+﻿@model IEnumerable<DullStore.Bean.ItemCart>
+@using DullStore.Bean
+@{
+    ViewBag.Title = "list";
+    Layout = "~/Views/Shared/_LayoutChinh.cshtml";
+}
+@{
+    ShoppingCart cart = (ShoppingCart)Session["cart"];
+    if (cart == null)
+    {
+        cart = new ShoppingCart();
+    }
+    //cart.AddItem(0, "", 0, 0, "");
+    Session["cart"] = cart;
+}
+
+<div class="row">
+    <div class="span12">
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index">Trang chủ</a> <span class="divider">/</span></li>
+            <li class="active">Giỏ hàng</li>
+        </ul>
+        <div class="well well-small">
+            <h1>Có @cart.tongsoluong() sản phẩm trong giỏ hàng <small class="pull-right"></small></h1>
+            <hr class="soften" />
+
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><img width="100" height="100" src="~/Content/Image/@item.linkanh" alt=""></td>
+                            <td>@item.name</td>
+                            <td>@item.gia</td>
+                            <td>
+                                <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text" value="@item.soluong">
+                                <div class="input-append">
+                                    <a class="btn btn-mini" href="/ShoppingCart/UpdateGiam?id=@item.id">-</a><a class="btn btn-mini" href="/ShoppingCart/UpdateTang?id=@item.id"> + </a><a class="btn btn-mini btn-danger" href="/ShoppingCart/DeleteGioHang?id=@item.id"><span class="icon-remove"></span></a>
+                                </div>
+                            </td>
+                            <td>@item.tonggia()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table><br />
+            @using (Html.BeginForm("DatHang", "ShoppingCart"))
+            {
+                <div class="form-horizontal">
+                    <h4>Khách hàng</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="control-group">
+                        <label class="control-label">Họ và tên <sup>*</sup></label>
+                        <div class="col-md-10">
+                            <input type="text" name="ten" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Email <sup>*</sup></label>
+                        <div class="col-md-10">
+                            <input type="text" name="email" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Địa chỉ <sup>*</sup></label>
+                        <div class="col-md-10">
+                            <input type="text" name="diachi" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Số điện thoại <sup>*</sup></label>
+                        <div class="col-md-10">
+                            <input type="text" name="sdt" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Tiếp" class="shopBtn btn-large pull-right" onclick="return alert('Đặt hàng thành công!! Oder của bạn sẽ được giao')" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <a href="/Home/Index" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Quay lại </a>
+
+        </div>
+    </div>
+</div>
+

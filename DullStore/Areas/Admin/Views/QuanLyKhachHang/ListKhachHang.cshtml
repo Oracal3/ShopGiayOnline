@@ -1,0 +1,49 @@
+﻿@model IEnumerable<DullStore.Entities.KhachHang>
+
+@{
+    ViewBag.Title = "ListKhachHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Danh sách khách hàng</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.hoten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diachi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sodienthoai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.diachi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sodienthoai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật thông tin khách hàng", "Edit", new { id = item.ma })
+            </td>
+        </tr>
+    }
+
+</table>

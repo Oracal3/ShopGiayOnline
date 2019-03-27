@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Views/Shared/_LayoutChinh.cshtml";
+}
+@using DullStore.Bean
+@using DullStore.Entities
+
+@{
+    ShoppingCart cart = (ShoppingCart)Session["cart"];
+    GioHang gh = (GioHang)ViewData["DonHang"];
+}
+@{
+    <h1>Mã đơn hàng: @gh.ma</h1>
+    <h1>Ngày đặt hàng: @gh.ngaydathang</h1>
+    <br />
+    <div class="well well-small">
+        <hr class="soften" />
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in cart.listItem)
+                {
+                    <tr>
+                        <td><img width="100" src="/Content/Image/@item.linkanh" alt=""></td>
+                        <td>@item.name</td>
+                        <td>
+                            @item.soluong
+                        </td>
+                        <td>@item.tonggia()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Tổng tiền là: @cart.tonggiatien()</h2>
+    </div>
+        <a href="/Home/Index" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Quay lại trang chủ</a>
+}
+

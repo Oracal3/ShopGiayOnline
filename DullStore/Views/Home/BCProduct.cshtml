@@ -1,0 +1,24 @@
+﻿@model IEnumerable<DullStore.Entities.SanPham>
+@{
+    ViewBag.Title = "BCProduct";
+    Layout = "~/Views/Shared/_LayoutChinh.cshtml";
+}
+
+<div class="span9">
+    <h4>Sản phẩm Dull Shop</h4>
+    <ul class="thumbnails">
+        @foreach (var item in Model)
+        {
+            <li class="span3">
+                <div class="thumbnail">
+                    <a href="/Home/ChitietSP?id=@item.ma"><img src="/Content/Image/@item.linkanh" alt="" /></a>
+                    <div class="caption">
+                        <h5>@item.ten</h5>
+                        <h4 style="text-align:center"><a class="btn" href="/Home/ChitietSP?id=@item.ma"> <i class="icon-zoom-in"></i></a> <a class="btn" href="/ShoppingCart/AddGioHang?id=@item.ma">Thêm vào<i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">@item.giaban VNĐ</a></h4>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+

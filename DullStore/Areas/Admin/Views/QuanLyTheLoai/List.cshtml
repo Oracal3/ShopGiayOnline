@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DullStore.Entities.Style>
+@using DullStore.Entities
+@using DullStore.DAO
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Style giầy</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Add", null, new {@class="btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ten)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten)
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.ma },new {@class="btn btn-info" }) |
+            @{
+                DullStoreDbContex db = new DullStoreDbContex();
+                SanPhamDAO sp = new SanPhamDAO();
+                IQueryable<SanPham> list = sp.ListSPTL(item.ma);
+                if (list.Count() == 0)
+                {
+                    <a href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?');">Xóa</a>
+                }
+                else
+                {
+                    <a href="/QuanLyTheLoai/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại giày này?');" hidden="hidden">Xóa</a>
+                }
+            }
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<DullStore.Entities.ChiTietGioHang>
+@using DullStore.Entities
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
+}
+
+<h2>Chi tiết đơn hàng</h2>
+@{ 
+    GioHang gh = (GioHang)ViewData["GiorHangf"];
+    DullStoreDbContex db = new DullStoreDbContex();
+    KhachHang kh = db.KhachHang.SingleOrDefault(n => n.ma == gh.makhachhang);
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Người mua hàng
+        </dt>
+
+        <dd>
+            @kh.hoten
+        </dd>
+
+        <dt>
+            Email
+        </dt>
+
+        <dd>
+            @kh.email
+        </dd>
+
+        <dt>
+            Địa chỉ
+        </dt>
+
+        <dd>
+            @kh.diachi
+        </dd>
+
+        <dt>
+            Số điện thoại
+        </dt>
+
+        <dd>
+            @kh.sodienthoai
+        </dd>
+        <dt>
+            Tình trạng đơn hàng
+        </dt>
+
+        <dd>
+            @gh.tinhtranggiaohang
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SanPham.ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SanPham.linkanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SanPham.xuatxu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SanPham.giaban)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.soluong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dongia)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SanPham.ten)
+        </td>
+        <td>
+            <div><img src="@Url.Content("~/Content/Image/"+item.SanPham.linkanh)" height="99" width="150" /></div>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SanPham.xuatxu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SanPham.giaban)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.soluong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dongia)
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Trở lại", "ListHoaDon")
+</div>

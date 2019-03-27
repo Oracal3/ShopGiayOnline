@@ -76,9 +76,14 @@ namespace DullStore.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            DanhMuc dm = db.DanhMuc.Find(id);
-            db.DanhMuc.Remove(dm);
-            db.SaveChanges();
+            try
+            {
+                DanhMuc dm = db.DanhMuc.Find(id);
+                db.DanhMuc.Remove(dm);
+                db.SaveChanges();
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            catch (Exception) { }
             return Redirect(Request.UrlReferrer.ToString());
         }
     }

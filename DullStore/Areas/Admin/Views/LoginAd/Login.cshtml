@@ -1,5 +1,6 @@
 ﻿
-@model DullStore.Models.Account
+@*@model DullStore.Models.Account*@
+@model DullStore.Entities.User
 @{
     Layout = null;
 }
@@ -43,15 +44,17 @@
                             @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
                             <fieldset>
                                 <div class="form-group">
-                                    @Html.TextBoxFor(model => model.taikhoan, new { @class = "form-control", @placeholder = "Tài khoản", @autofocus = "autofocus" })
+                                    @Html.TextBoxFor(model => model.userName, new { @class = "form-control", @placeholder = "Tài khoản", @autofocus = "autofocus" })
+                                    @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    @Html.TextBoxFor(model => model.matkhau, new { @class = "form-control", @placeholder = "Mật khẩu", @type = "password" })
+                                    @Html.TextBoxFor(model => model.password, new { @class = "form-control", @placeholder = "Mật khẩu", @type = "password" })
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        @Html.CheckBoxFor(model => model.RememberMe)
-                                        Remember Me
+                                        @*@Html.CheckBoxFor(model => model.RememberMe)*@
+                                       @* Remember Me*@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
@@ -69,7 +72,7 @@
     <script src="/Assets/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/Assets/admin/vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript 
+    <!-- Custom Theme JavaScript
         -->
     <script src="/Assets/admin/dist/js/sb-admin-2.js"></script>
 </body>

@@ -1,4 +1,5 @@
 ﻿using DullStore.DAO;
+using DullStore.Entities;
 using DullStore.Models;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,37 @@ namespace DullStore.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginAction(Account acc)
+        public ActionResult LoginAction(User acc)
         {
-            UserDAO user = new UserDAO();
-            bool check = user.Login(acc.taikhoan, acc.matkhau);
-            if (check)
+            if(ModelState.IsValid)
             {
-                Session["UserName"] = acc.taikhoan;
-                return RedirectToAction("AdIndex", "AdHome");
+                UserDAO user = new UserDAO();
+                var res = user.Login(acc.userName, acc.password);
+                if (res == 1)
+                {
+                    Session["UserName"] = acc.userName;
+                    return RedirectToAction("AdIndex", "AdHome");
+                    
+                }
+                else if (res == 0)
+                {
+                    ModelState.AddModelError("", "Tài khoản không tồn tại.");
+                }
+                else if(res == -1)
+                {
+                    ModelState.AddModelError("", "Vui lòng điền đầy đủ thông tin tài khoản.");
+                }
+                else if (res == -2)
+                {
+                    ModelState.AddModelError("", "Mật khẩu không đúng.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Đăng nhập không đúng.");
+                }
             }
-            else
-                return RedirectToAction("Login", "LoginAd");
+            return View("Login");
+            
         }
 
         public ActionResult Logout()

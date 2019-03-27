@@ -25,6 +25,7 @@ namespace DullStore.Areas.Admin.Controllers
         {
             ViewBag.madanhmuc = new SelectList(db.DanhMuc.ToList().OrderBy(x => x.tendanhmuc), "ma", "tendanhmuc");
             ViewBag.mastyle = new SelectList(db.Style.ToList().OrderBy(x => x.ten), "ma", "ten");
+            SetAlert("Thêm mới thành công", "success");
             return View();
         }
 
@@ -39,7 +40,7 @@ namespace DullStore.Areas.Admin.Controllers
             if (fileanh != null)
             {
                 var filename = Path.GetFileName(fileanh.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content/Image"), filename);
+                var path = Path.Combine(Server.MapPath("~/Content/Image"),filename);
                 fileanh.SaveAs(path);
                 sp.linkanh = fileanh.FileName;
             }
@@ -77,6 +78,7 @@ namespace DullStore.Areas.Admin.Controllers
             {
                 ViewBag.madanhmuc = new SelectList(db.DanhMuc.ToList().OrderBy(x => x.tendanhmuc), "ma", "tendanhmuc");
                 ViewBag.mastyle = new SelectList(db.Style.ToList().OrderBy(x => x.ten), "ma", "ten");
+                SetAlert("Sửa thành công", "success");
                 return View(sp);
             }
         }
@@ -132,8 +134,17 @@ namespace DullStore.Areas.Admin.Controllers
             }
             else
             {
-                db.SanPham.Remove(sp);
-                db.SaveChanges();
+                try
+                {
+                    db.SanPham.Remove(sp);
+                    db.SaveChanges();
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+                catch(Exception)
+                {
+                    SetAlert("Không thể xóa sản phẩm đã được tạo hóa đơn","danger");
+                }
+                
             }
             return Redirect(Request.UrlReferrer.ToString());
         }
@@ -149,6 +160,23 @@ namespace DullStore.Areas.Admin.Controllers
             }
             else
                 return View(sp);
+        }
+
+        public void SetAlert(string message,string type)
+        {
+            TempData["AlertMessage"] = message;
+            if(type == "success")
+            {
+                TempData["AlertType"] = "alert-success";
+            }
+            else if (type == "wanning")
+            {
+                TempData["AlertType"] = "alert-wanning";
+            }
+            else if (type == "danger")
+            {
+                TempData["AlertType"] = "alert-danger";
+            }
         }
     }
 }

@@ -57,37 +57,43 @@
                 <div class="form-horizontal">
                     <h4>Khách hàng</h4>
                     <hr />
+                    @if (TempData["AlertMessage"] != null)
+                    {
+                        <div id="AlertBox" class="alert @TempData["AlertType"]">@TempData["AlertMessage"]</div>
+                    }
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="control-group">
                         <label class="control-label">Họ và tên <sup>*</sup></label>
                         <div class="col-md-10">
                             <input type="text" name="ten" />
+
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Email <sup>*</sup></label>
+                        <label class="control-label">Email (abc@gmail.com) <sup>*</sup></label>
                         <div class="col-md-10">
                             <input type="text" name="email" />
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Địa chỉ <sup>*</sup></label>
+                        <label class="control-label">Địa chỉ<sup>*</sup></label>
                         <div class="col-md-10">
-                            <input type="text" name="diachi" />
+                            <input type="text" name="diachi"/>
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label">Số điện thoại <sup>*</sup></label>
+                        <label class="control-label">Số điện thoại (dạng số)<sup>*</sup></label>
                         <div class="col-md-10">
                             <input type="text" name="sdt" />
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Tiếp" class="shopBtn btn-large pull-right" onclick="return alert('Đặt hàng thành công!! Oder của bạn sẽ được giao')" />
+                            <input type="submit" value="Tiếp" class="shopBtn btn-large pull-right" />
                         </div>
                     </div>
                 </div>

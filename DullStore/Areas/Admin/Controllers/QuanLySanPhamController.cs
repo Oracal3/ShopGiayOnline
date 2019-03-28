@@ -85,19 +85,17 @@ namespace DullStore.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(SanPham sptm, HttpPostedFileBase fileanh)
+        public ActionResult Edit(SanPham sptm, HttpPostedFileBase fileanh1)
         {
             ViewBag.madanhmuc = new SelectList(db.DanhMuc.ToList().OrderBy(x => x.tendanhmuc), "ma", "tendanhmuc");
             ViewBag.mastyle = new SelectList(db.Style.ToList().OrderBy(x => x.ten), "ma", "ten");
             SanPham sp = db.SanPham.Find(sptm.ma);
-            if (fileanh != null)
+            if (fileanh1 == null)
             {
-                var filename = Path.GetFileName(fileanh.FileName);
-
-                var path = Path.Combine(Server.MapPath("~/Content/Image"), filename);
-
-                fileanh.SaveAs(path);
-                sp.linkanh = fileanh.FileName;
+                //var filename1 = Path.GetFileName(fileanh1.FileName);
+                //var path = Path.Combine(Server.MapPath("~/Content/Image"), filename1);
+                //fileanh1.SaveAs(path);
+                //sp.linkanh = fileanh1.FileName;
                 sp.ten = sptm.ten;
                 sp.giaban = sptm.giaban;
                 sp.madanhmuc = sptm.madanhmuc;
@@ -106,6 +104,10 @@ namespace DullStore.Areas.Admin.Controllers
             }
             else
             {
+                var filename1 = Path.GetFileName(fileanh1.FileName);
+                var path = Path.Combine(Server.MapPath("~/Content/Image"), filename1);
+                fileanh1.SaveAs(path);
+                sp.linkanh = fileanh1.FileName;
                 sp.ten = sptm.ten;
                 sp.giaban = sptm.giaban;
                 sp.madanhmuc = sptm.madanhmuc;

@@ -61,14 +61,17 @@ namespace DullStore.Controllers
         [HttpPost]
         public ActionResult DatHang(string ten, string email, string diachi, string sdt)
         {
+
             if (Session["cart"] == null)
             {
                 return RedirectToAction("Index", "Home");
+
             }
             //them vao chi tiet gio hang
             KhachHang kh = new KhachHang();
-            KhachHang test=db.KhachHang.SingleOrDefault(x=>x.hoten==ten&&x.email==email&&x.diachi==diachi&&x.sodienthoai==sdt);
-            if (test!=null)
+            KhachHang test = db.KhachHang.SingleOrDefault(x => x.hoten == ten && x.email == email && x.diachi == diachi && x.sodienthoai == sdt);
+            
+            if (test != null)
             {
                 kh.ma = test.ma;
                 kh.hoten = test.hoten;
@@ -83,7 +86,15 @@ namespace DullStore.Controllers
                 kh.email = email;
                 kh.diachi = diachi;
                 db.KhachHang.Add(kh);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch(Exception) {
+                    SetAlert("Vui lòng điền đầy đủ thông tin và đúng định dạng", "danger");
+                    return RedirectToAction("list", "ShoppingCart");
+                }
+                
             }
             ShoppingCart cart = (ShoppingCart)Session["cart"];
             GioHang gh = new GioHang();
@@ -105,6 +116,25 @@ namespace DullStore.Controllers
             }
             ViewData["DonHang"] = gh;
             return View();
+
+        }
+
+
+        public void SetAlert(string message, string type)
+        {
+            TempData["AlertMessage"] = message;
+            if (type == "success")
+            {
+                TempData["AlertType"] = "alert-success";
+            }
+            else if (type == "wanning")
+            {
+                TempData["AlertType"] = "alert-wanning";
+            }
+            else if (type == "danger")
+            {
+                TempData["AlertType"] = "alert-danger";
+            }
         }
     }
 }

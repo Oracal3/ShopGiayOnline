@@ -13,13 +13,18 @@
         [Column(Order = 0)]
         [StringLength(100)]
         [Required(ErrorMessage ="Vui lòng điền tên đăng nhập")]
+        
         public string userName { get; set; }
 
-        [Key]
+        
         [Column(Order = 1)]
         [StringLength(100)]
         [Required(ErrorMessage = "Vui lòng mật khẩu đăng nhập")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
+
+        //[Compare("password")]
+        //public string passConfirm { get; set; }
         
     }
 }

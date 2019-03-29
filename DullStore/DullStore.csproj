@@ -170,6 +170,7 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\Controllers\QuanLyHoaDonController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyTheLoaiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TaiKhoanController.cs" />
     <Compile Include="DAO\ChiTietGioHangDAO.cs" />
     <Compile Include="DAO\GioHangDAO.cs" />
     <Compile Include="Entities\ChiTietGioHang.cs" />
@@ -243,6 +244,8 @@
     <Content Include="Areas\Admin\Views\QuanLyHoaDon\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyHoaDon\Details.cshtml" />
     <Content Include="Views\Home\SPStyle.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TaiKhoan\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

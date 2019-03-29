@@ -15,7 +15,7 @@ namespace DullStore.Areas.Admin.Controllers
         // GET: Admin/QuanLySanPham
         public ActionResult Product(int? trang)
         {
-            int sosptrentrang = 4;
+            int sosptrentrang = 10;
             int stttrang = (trang ?? 1);
             return View(db.SanPham.ToList().OrderBy(x => x.ma).ToPagedList(stttrang, sosptrentrang));
         }

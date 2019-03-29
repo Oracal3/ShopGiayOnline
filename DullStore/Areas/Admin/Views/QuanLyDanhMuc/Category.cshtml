@@ -7,11 +7,16 @@
 }
 
 <h2>Danh mục sản phẩm</h2>
-
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Quản trị</a>
+    </li>
+    <li class="breadcrumb-item active">Danh mục</li>
+</ol>
 <p>
     @Html.ActionLink("Thêm Danh mục mới", "Add", null, new {@class="btn btn-success"})
 </p>
-<table class="table">
+<table class="table table-bordered" id="dataTable" cellspacing="0">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.tendanhmuc)

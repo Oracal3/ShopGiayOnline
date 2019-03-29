@@ -6,9 +6,14 @@
 }
 
 <h2>Danh sách khách hàng</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Quản trị</a>
+    </li>
+    <li class="breadcrumb-item active">Khách hàng</li>
+</ol>
 
-
-<table class="table">
+<table class="table table-bordered" id="dataTable" cellspacing="0">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.hoten)
@@ -41,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.ActionLink("Cập nhật thông tin khách hàng", "Edit", new { id = item.ma })
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ma })
             </td>
         </tr>
     }

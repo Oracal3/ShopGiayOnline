@@ -6,68 +6,83 @@
     ViewBag.Title = "Product";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAd.cshtml";
 }
-
 <h2>Danh sách sản phẩm</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Quản trị</a>
+    </li>
+    <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+</ol>
+
 @if (TempData["AlertMessage"] != null)
 {
     <div id="AlertBox" class="alert @TempData["AlertType"]">@TempData["AlertMessage"]</div>
 }
-<p>
+<div class="card-header">
+    <i></i>
     @Html.ActionLink("Thêm mới", "Add", null, new { @class = "btn btn-success" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.First().ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().giaban)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().linkanh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().xuatxu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().madanhmuc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.First().mastyle)
-        </th>
-        <th></th>
-    </tr>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().ten)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().giaban)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().linkanh)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().xuatxu)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().madanhmuc)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().mastyle)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.giaban)
+                        </td>
+                        <td>
+                            <div><img src="@Url.Content("~/Content/Image/"+item.linkanh)" height="99" width="150" /></div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.xuatxu)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DanhMuc.tendanhmuc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Style.ten)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ma }, new { @class = "btn btn-info" }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ma }, new { @class = "btn btn-warning" }) |
+                            <button class="btn btn-danger"><a href="/QuanLySanPham/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a></button>
+                        </td>
+                    </tr>
+                }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.giaban)
-            </td>
-            <td>
-                <div><img src="@Url.Content("~/Content/Image/"+item.linkanh)" height="99" width="150" /></div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.xuatxu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DanhMuc.tendanhmuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Style.ten)
-            </td>
-            <td>
-                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.ma }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Chi tiết", "Details", new { id = item.ma }, new { @class = "btn btn-warning" }) |
-                <button class="btn btn-danger"><a href="/QuanLySanPham/Delete?id=@item.ma" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a></button>
-            </td>
-        </tr>
-    }
+            </table>
+        </div>
+    </div>
+</div>
 
-</table>
 @*tạo link liên kết số trang*@
 
 <div class="pagination">

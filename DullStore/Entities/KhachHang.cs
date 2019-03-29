@@ -38,6 +38,7 @@
 
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Bạn phải nhập email")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email phải định dạnh abc@xxx.xyz")]
         [StringLength(100)]
         public string email { get; set; }
 
